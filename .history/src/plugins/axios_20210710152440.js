@@ -29,9 +29,7 @@ _axios.interceptors.request.use(
     if (store.getters.GET_TOKEN) {
       config.headers['token'] = store.getters.GET_TOKEN
     }
-    config.paramsSerializer = (params) => {
-      return qs.stringify(params, { arrayFormat: 'repeat' })
-    }
+    config.paramsSerializer = (params) => {}
     return config
   },
   function(error) {
@@ -83,14 +81,7 @@ const request = (url, method, params, callback) => {
   } else {
     const formData = new FormData()
     for (let key in params) {
-      // 判断是否是数组
-      if (params[key] instanceof Array) {
-        for (let i = 0; i < params[key].length; i++) {
-          formData.append(key, params[key][i])
-        }
-      } else {
-        formData.append(key, params[key])
-      }
+      formData.append(key, params[key])
     }
     config.data = formData
   }
@@ -117,7 +108,6 @@ const request = (url, method, params, callback) => {
     })
 }
 
-Vue.prototype.axios = _axios
 Vue.prototype.request = request
 
 Vue.prototype.get = (url, params, callback) => {

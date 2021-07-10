@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Editor v-model="content"></Editor>
+    <WyEditor v-model="content"></WyEditor>
     <div style="margin-top: 20px;">
       <el-button @click="prev">上一步</el-button>
       <el-button type="primary" @click="save">保存</el-button>
@@ -21,7 +21,7 @@ export default {
       this.$emit('prev')
     },
     save() {
-      this.$emit('setForm', { detailHTML: this.content })
+      this.$emit('setForm', { detailHtml: this.content })
       this.$emit('save')
     },
   },

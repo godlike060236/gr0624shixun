@@ -21,7 +21,7 @@ export default {
       this.$emit('prev')
     },
     save() {
-      this.$emit('setForm', { detailHTML: this.content })
+      this.$emit('setForm', { detailHtml: this.content })
       this.$emit('save')
     },
   },

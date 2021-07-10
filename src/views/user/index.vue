@@ -1,9 +1,22 @@
 <template>
   <div class="index">
     <div class="gr-filter">
-      <el-input class="special" v-model="query.name" placeholder="请输入用户名"></el-input>
-      <el-button type="primary" plain icon="el-icon-search" @click="search">查询</el-button>
-      <el-button size='medium' type="primary" plain icon="el-icon-plus" style="float: right" @click="add">添加用户
+      <el-input
+        class="special"
+        v-model="query.name"
+        placeholder="请输入用户名"
+      ></el-input>
+      <el-button type="primary" plain icon="el-icon-search" @click="search"
+        >查询</el-button
+      >
+      <el-button
+        size="medium"
+        type="primary"
+        plain
+        icon="el-icon-plus"
+        style="float: right"
+        @click="add"
+        >添加用户
       </el-button>
       <div class="clear"></div>
     </div>
@@ -15,9 +28,10 @@
       <el-table-column label="头像" align="center">
         <template slot-scope="scope">
           <el-image
-              style="width: 75px; height: 75px"
-              :src="img(scope.row.icon)"
-              fit="contain"></el-image>
+            style="width: 75px; height: 75px"
+            :src="img(scope.row.icon)"
+            fit="contain"
+          ></el-image>
         </template>
       </el-table-column>
       <el-table-column label="是否有效" prop="active">
@@ -29,26 +43,53 @@
       <el-table-column width="200px" align="center" label="操作">
         <template slot-scope="scope" style="text-align: center">
           <template v-if="scope.row.active === 1">
-            <el-button type="primary" plain @click="chg(scope.row.id)" size="small">修改</el-button>
-            <el-button type="danger" plain @click="del(scope.row.id,0)" size="small">删除</el-button>
+            <el-button
+              type="primary"
+              plain
+              @click="chg(scope.row.id)"
+              size="small"
+              >修改</el-button
+            >
+            <el-button
+              type="danger"
+              plain
+              @click="del(scope.row.id, 0)"
+              size="small"
+              >删除</el-button
+            >
           </template>
           <template v-else>
-            <el-button type="primary" plain @click="del(scope.row.id,1)" size="small">恢复用户状态</el-button>
+            <el-button
+              type="primary"
+              plain
+              @click="del(scope.row.id, 1)"
+              size="small"
+              >恢复用户状态</el-button
+            >
           </template>
         </template>
       </el-table-column>
     </el-table>
     <div class="position">
       <el-pagination
-          background
-          :current-page.sync="query.pageNo"
-          layout="prev, pager, next"
-          :page-count="tableData.pages"
-          @current-change="getTableData">
+        background
+        :current-page.sync="query.pageNo"
+        layout="prev, pager, next"
+        :page-count="tableData.pages"
+        @current-change="getTableData"
+      >
       </el-pagination>
-      <el-dialog width="550px" :title="userDialog.title" :visible.sync="userDialog.show">
-        <UserEdit v-if="userDialog.show" :show.sync="userDialog.show" @getTableData="getTableData"
-                  :id="userDialog.id"></UserEdit>
+      <el-dialog
+        width="550px"
+        :title="userDialog.title"
+        :visible.sync="userDialog.show"
+      >
+        <UserEdit
+          v-if="userDialog.show"
+          :show.sync="userDialog.show"
+          @getTableData="getTableData"
+          :id="userDialog.id"
+        ></UserEdit>
       </el-dialog>
     </div>
   </div>
@@ -57,7 +98,7 @@
 <script>
 import UserEdit from './edit'
 export default {
-  name: "userList",
+  name: 'userList',
   data() {
     const baseUrl = '/ums-user'
     return {
@@ -65,17 +106,17 @@ export default {
       query: {
         pageNo: 1,
         pageSize: 10,
-        name: ''
+        name: '',
       },
       url: {
         list: baseUrl + '/list',
-        delete: baseUrl + '/del'
+        delete: baseUrl + '/del',
       },
       userDialog: {
         title: '',
         show: false,
-        id: null
-      }
+        id: null,
+      },
     }
   },
   created() {
@@ -83,7 +124,7 @@ export default {
   },
   methods: {
     getTableData() {
-      this.get(this.url.list, this.query, response => {
+      this.get(this.url.list, this.query, (response) => {
         this.tableData = response
       })
     },
@@ -102,17 +143,18 @@ export default {
       this.userDialog.title = '修改用户'
     },
     del(id, active) {
-      const text = active === 0 ? '确定真的要删除该数据吗?' : '确定真的要恢复该数据吗?'
-      this.$confirm(text, '提示', {type: 'warning'}).then(() => {
-        this.post(this.url.delete, {id: id, active: active}, () => {
+      const text =
+        active === 0 ? '确定真的要删除该数据吗?' : '确定真的要恢复该数据吗?'
+      this.$confirm(text, '提示', { type: 'warning' }).then(() => {
+        this.post(this.url.delete, { id: id, active: active }, () => {
           this.getTableData()
         })
       })
-    }
+    },
   },
   components: {
-    UserEdit
-  }
+    UserEdit,
+  },
 }
 </script>
 

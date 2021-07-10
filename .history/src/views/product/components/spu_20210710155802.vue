@@ -16,9 +16,9 @@
       >
         <el-input v-model="item.value"></el-input>
       </el-form-item>
-      <el-form-item style="margin-top:20px">
+      <el-form-item style="margin-top:200px">
         <el-button @click="prev">上一步</el-button>
-        <el-button type="primary" @click="next">下一步</el-button>
+        <el-button type="primary" size="small" @click="next">下一步</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -77,20 +77,19 @@ export default {
     },
     query() {},
     change(categoryId) {
-      // bug: 每次先清空清空sups
-      this.form.spus = []
+      // this.form.spus = []
       this.get(
-        '/pms-product/getAttr',
+        '/pms-spu/getByCategory',
         { categoryIds: categoryId },
         (response) => {
-          for (let i = 0; i < response.spus.length; i++) {
-            this.form.spus.push({ name: response.spus[i].name, value: '' })
+          for (let i = 0; i < response.length; i++) {
+            this.form.spus.push({ name: response[i].name, value: '' })
           }
-          for (let i = 0; i < response.skus.length; i++) {
-            response.skus[i].value = []
-            response.skus[i].addval = ''
-          }
-          this.$emit('setSkus', response.skus)
+          // for (let i = 0; i < response.skus.length; i++) {
+          //   response.skus[i].value = []
+          //   response.skus[i].addval = ''
+          // }
+          // this.$emit('setSkus', response.skus)
         }
       )
     },

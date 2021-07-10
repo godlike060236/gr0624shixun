@@ -8,17 +8,7 @@
         <el-input v-model="form.firstLetter"></el-input>
       </el-form-item>
       <el-form-item label="品牌图片" prop="file">
-        <el-upload
-          action="http"
-          list-type="picture-card"
-          :auto-upload="false"
-          :limit="1"
-          :on-change="uploadFile"
-          :on-remove="removeFile"
-          :file-list="fileList"
-        >
-          <i class="el-icon-plus"></i>
-        </el-upload>
+        <uploadone v-model="form.file" :fileList="fileList"></uploadone>
       </el-form-item>
       <el-form-item style="text-align: right">
         <el-button type="primary" plain @click="save">保存</el-button>
@@ -96,12 +86,6 @@ export default {
           url: this.img(response.logo),
         })
       })
-    },
-    uploadFile(file) {
-      this.form.file = file.raw
-    },
-    removeFile() {
-      this.form.file = null
     },
   },
 }

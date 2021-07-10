@@ -9,10 +9,9 @@ import ElementUI from 'element-ui'
 import uploadone from './components/upload/uploadone'
 import uploadmore from './components/upload/uploadmore'
 // 引入富文本编辑器
-import Editor from './components/editor'
+import wyEditor from '@/components/editor'
 Vue.component('uploadone', uploadone)
 Vue.component('uploadmore', uploadmore)
-Vue.component('Editor', Editor)
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false

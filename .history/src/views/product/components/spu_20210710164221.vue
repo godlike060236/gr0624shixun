@@ -83,14 +83,15 @@ export default {
         '/pms-product/getAttr',
         { categoryIds: categoryId },
         (response) => {
+          console.log(response)
           for (let i = 0; i < response.spus.length; i++) {
             this.form.spus.push({ name: response.spus[i].name, value: '' })
           }
-          for (let i = 0; i < response.skus.length; i++) {
-            response.skus[i].value = []
-            response.skus[i].addval = ''
-          }
-          this.$emit('setSkus', response.skus)
+          // for (let i = 0; i < response.skus.length; i++) {
+          //   response.skus[i].value = []
+          //   response.skus[i].addval = ''
+          // }
+          // this.$emit('setSkus', response.skus)
         }
       )
     },

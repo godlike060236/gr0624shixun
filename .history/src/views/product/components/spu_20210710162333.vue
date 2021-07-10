@@ -77,8 +77,7 @@ export default {
     },
     query() {},
     change(categoryId) {
-      // bug: 每次先清空清空sups
-      this.form.spus = []
+      // this.form.spus = []
       this.get(
         '/pms-product/getAttr',
         { categoryIds: categoryId },
@@ -86,11 +85,11 @@ export default {
           for (let i = 0; i < response.spus.length; i++) {
             this.form.spus.push({ name: response.spus[i].name, value: '' })
           }
-          for (let i = 0; i < response.skus.length; i++) {
-            response.skus[i].value = []
-            response.skus[i].addval = ''
-          }
-          this.$emit('setSkus', response.skus)
+          // for (let i = 0; i < response.skus.length; i++) {
+          //   response.skus[i].value = []
+          //   response.skus[i].addval = ''
+          // }
+          // this.$emit('setSkus', response.skus)
         }
       )
     },

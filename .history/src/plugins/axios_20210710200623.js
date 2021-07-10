@@ -83,7 +83,6 @@ const request = (url, method, params, callback) => {
   } else {
     const formData = new FormData()
     for (let key in params) {
-      // 判断是否是数组
       if (params[key] instanceof Array) {
         for (let i = 0; i < params[key].length; i++) {
           formData.append(key, params[key][i])

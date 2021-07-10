@@ -66,7 +66,7 @@ export default {
           for (let i = 0; i < this.form.spus.length; i++) {
             spus.push(JSON.stringify(this.form.spus[i]))
           }
-          console.log(spus)
+          // console.log(spus)
           this.$emit('setForm', {
             categoryId: this.form.categoryId,
             spus: spus,

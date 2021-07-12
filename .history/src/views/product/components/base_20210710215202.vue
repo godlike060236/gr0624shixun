@@ -61,12 +61,6 @@ export default {
       },
     }
   },
-  created() {
-    if (this.id) {
-      this.url.save = '/ums-role/update'
-      this.getOne()
-    }
-  },
   methods: {
     next() {
       this.$refs['form'].validate((valid) => {
@@ -74,14 +68,6 @@ export default {
           this.$emit('setForm', this.form)
           this.$emit('next')
         }
-      })
-    },
-    getone() {
-      this.get(this.url.getone, { id: this.id }, (response) => {
-        for (let key in this.form) {
-          this.form[key] = response[key]
-        }
-        this.form.id = response.id
       })
     },
   },

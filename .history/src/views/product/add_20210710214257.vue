@@ -80,7 +80,6 @@ export default {
       console.log(this.form)
       this.post(this.url.add, this.form, (response) => {
         console.log(response)
-        this.$emit('update:show', false)
       })
     },
     next() {

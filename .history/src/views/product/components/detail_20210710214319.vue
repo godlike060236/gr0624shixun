@@ -21,6 +21,7 @@ export default {
       this.$emit('prev')
     },
     save() {
+      this.$emit('update:show', false)
       this.$emit('setForm', { detailHtml: this.content })
       this.$emit('save')
     },

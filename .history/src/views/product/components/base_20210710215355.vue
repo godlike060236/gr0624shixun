@@ -61,12 +61,7 @@ export default {
       },
     }
   },
-  created() {
-    if (this.id) {
-      this.url.save = '/ums-role/update'
-      this.getOne()
-    }
-  },
+  created() {},
   methods: {
     next() {
       this.$refs['form'].validate((valid) => {

@@ -1,53 +1,68 @@
 <template>
   <div>
-    <div class="gr-filter">
-      <el-button
-        size="medium"
-        type="primary"
-        plain
-        icon="el-icon-plus"
-        style="float: right"
-        @click="add"
-        >添加商品</el-button
-      >
+    <div class="dyc_filter">
+      <el-button type="primary" plain icon="el-icon-plus" style="float: right;" @click="add"></el-button>
       <div class="clear"></div>
     </div>
-    <el-table :data="tableData.records" border style="width: 100%">
+    <el-table
+        :data="tableData.records"
+        border>
+
       <el-table-column label="编号" prop="id"></el-table-column>
       <el-table-column label="属性名" prop="name"></el-table-column>
-      <el-table-column width="150px" align="center">
-        <template slot-scope="scope" style="text-align: center">
-          <el-button
-            type="primary"
-            plain
-            @click="update(scope.row.id)"
-            size="mini"
-            >修改</el-button
-          >
-          <el-button
-            type="danger"
-            plain
-            @click="del(scope.row.id, 0)"
-            size="mini"
-            >删除</el-button
-          >
+      <el-table-column label="单价" prop="price"></el-table-column>
+      <el-table-column label="状态">
+        <template slot-scope="scope">
+          <span v-if="scope.row.newStatus === 1">新品</span>
+          <span v-else>非新品</span>
+          <span v-if="scope.row.hotStatus === 1">热卖</span>
+          <span v-else>非热卖</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="商品图片">
+        <template slot-scope="scope">
+          <el-image
+              style="width: 80px; height: 80px"
+              :src="img(scope.row.img)"
+              fit="contain"></el-image>
+        </template>
+      </el-table-column>
+      <el-table-column label="是否上架">
+        <template slot-scope="scope">
+          <span v-if="scope.row.publishStatus === 1">上架</span>
+          <span v-else>下架</span>
+        </template>
+      </el-table-column>
+      <el-table-column width="150px">
+        <template slot-scope="scope">
+          <template v-if="scope.row.publishStatus === 0">
+            <el-button type="danger" plain @click="publish(scope.row.id,1)" size="mini">上架</el-button>
+          </template>
+          <template v-else>
+            <el-button type="danger" plain @click="publish(scope.row.id,0)" size="small">下架</el-button>
+          </template>
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+        background
+        :current-page.sync="query.pageNo"
+        layout="prev, pager, next"
+        :page-count="tableData.pages"
+        @current-change="getTableData">
+    </el-pagination>
     <el-dialog
-      width="750px"
-      :title="userDialog.title"
-      :visible.sync="userDialog.show"
-      :close-on-click-modal="false"
-    >
+        width="750px"
+        :title="userDialog.title"
+        :visible.sync="userDialog.show"
+        :close-on-click-modal="false">
       <component
-        v-if="userDialog.show"
-        :is="userDialog.component"
-        :show.sync="userDialog.show"
-        :id="userDialog.id"
-        :categoryId="query.categoryId"
-        @getTableData="getTableData"
-      ></component>
+          v-if="userDialog.show"
+          :is="userDialog.component"
+          :show.sync="userDialog.show"
+          :id="userDialog.id"
+          :categoryId="query.categoryId"
+          @getTableData="getTableData"></component>
     </el-dialog>
   </div>
 </template>
@@ -59,20 +74,20 @@ export default {
     const module = '/pms-product'
     return {
       tableData: [],
-      url: {
+      url:{
         list: module + '/list',
-        del: module + '/del',
+        publish: module +'/publish'
       },
       query: {
         pageNo: 1,
-        pageSize: 8,
+        pageSize: 8
       },
       userDialog: {
         show: false,
         title: '',
         component: () => import('./add'),
-        id: null,
-      },
+        id: null
+      }
     }
   },
   created() {
@@ -81,7 +96,7 @@ export default {
   },
   methods: {
     getTableData() {
-      this.get(this.url.list, this.query, (response) => {
+      this.get(this.url.list,this.query, response => {
         this.tableData = response
       })
     },
@@ -90,43 +105,19 @@ export default {
       this.userDialog.show = true
       this.userDialog.title = '添加商品'
     },
-    update(id) {
-      this.userDialog.id = id
-      this.userDialog.show = true
-      this.userDialog.title = '修改spu'
-    },
-    del(id, active) {
-      const txt =
-        active === 0
-          ? '确定真的要删除该数据吗?'
-          : '确定真的要将数据恢复到有效吗?'
-      this.$confirm(txt, '提示', { type: 'warning' }).then(() => {
-        this.post(this.url.del, { id: id, active: active }, () => {
+    publish(id,publishStatus) {
+      const txt = publishStatus === 1 ? '确定上架?' : '确定下架?'
+      this.$confirm(txt,'提示',{type: 'warning'}).then(()=>{
+        this.post(this.url.publish,{id: id, publishStatus: publishStatus}, () => {
           this.getTableData()
         })
       })
     },
-    search() {
+    search(){
       this.query.pageNo = 1
       this.getTableData()
     },
-    users(roleId) {
-      this.$router.push({
-        path: '/roleusers',
-        query: {
-          roleId: roleId,
-        },
-      })
-    },
-    resources(roleId) {
-      this.$router.push({
-        path: '/roleresource',
-        query: {
-          roleId: roleId,
-        },
-      })
-    },
-  },
+  }
 }
 </script>
 

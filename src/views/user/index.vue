@@ -126,6 +126,7 @@ export default {
     getTableData() {
       this.get(this.url.list, this.query, (response) => {
         this.tableData = response
+        console.log(this.tableData)
       })
     },
     search() {

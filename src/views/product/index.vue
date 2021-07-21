@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="dyc_filter">
+    <div class="gr-filter">
       <el-button type="primary" plain icon="el-icon-plus" style="float: right;" @click="add"></el-button>
       <div class="clear"></div>
     </div>
@@ -75,7 +75,7 @@ export default {
     return {
       tableData: [],
       url:{
-        list: module + '/list',
+        list: module + '/backList',
         publish: module +'/publish'
       },
       query: {

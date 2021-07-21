@@ -22,6 +22,7 @@
       <el-menu-item index="/brand">品牌管理</el-menu-item>
       <el-menu-item index="/category">分类管理</el-menu-item>
       <el-menu-item index="/product">商品管理</el-menu-item>
+      <el-menu-item index="/order">订单管理</el-menu-item>
     </el-submenu>
   </el-menu>
 </template>

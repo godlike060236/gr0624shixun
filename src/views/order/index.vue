@@ -34,6 +34,9 @@
 						<el-button type="primary" plain @click="deliver(scope.row.id,1,1,0)" size="small">发货</el-button>
 						<el-button type="danger" plain @click="active(scope.row.id,0,0,1)" size="small">失效</el-button>
 					</template>
+          <template v-else>
+            <el-button type="success" size="small">已发货</el-button>
+          </template>
 				</template>
 			</el-table-column>
 		</el-table>
